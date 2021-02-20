@@ -90,11 +90,9 @@ const getRandomArray = (array) => {
   const newArray = [];
   // Функция, для сбора случайного массива из другого массива
   array.forEach((element) => {
-    if (Math.random() > 0.5) {
-
-      return;
+    if (Math.round(Math.random())) {
+      newArray.push(element)
     }
-    newArray.push(element);
   })
 
   return newArray;
