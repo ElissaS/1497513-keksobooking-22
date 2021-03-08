@@ -1,4 +1,3 @@
-
 import { getRandomInteger, getRandomFloatInRange, getRandomArray, getRandomArrayElement } from './util.js';
 
 const TITLE = [
@@ -101,6 +100,7 @@ const createLocation = (locationX, locationY) => {
   }
 }
 
+
 // Функция, собирающая в себе вышенаписанные функции author, offer, location
 const createSuggestion = () => {
   const RandomLocationX = getRandomFloatInRange(LOCATION.x.min, LOCATION.x.max, 5);
@@ -113,6 +113,8 @@ const createSuggestion = () => {
 }
 
 // генерит пустой массив с количеством элементов COUNT_SUGGESTIONS, перезаписывает null  на результат функции createSuggestion()
-const suggestion = new Array(COUNT_SUGGESTIONS).fill(null).map(() => createSuggestion());
+const suggestions = new Array(COUNT_SUGGESTIONS).fill(null).map(() => createSuggestion());
+console.log(suggestions);
 
-export { suggestion };
+export { suggestions };
+
