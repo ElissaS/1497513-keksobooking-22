@@ -18,6 +18,7 @@ const drawSuggestion = (suggestion) => {
     house: 'Дом',
     palace: 'Дворец',
   }
+
   content.querySelector('.popup__type').innerText = types[suggestion.offer.type];
 
 
@@ -48,7 +49,7 @@ const drawSuggestion = (suggestion) => {
       newPhoto.width = '45';
       newPhoto.height = '40';
       newPhoto.alt = 'Фотография жилья';
-      newPhoto.className = 'popup__photo'
+      newPhoto.className = 'popup__photo';
       photoGallery.appendChild(newPhoto);
     });
   };
