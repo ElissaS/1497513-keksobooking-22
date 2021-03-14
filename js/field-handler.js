@@ -1,0 +1,105 @@
+const form = document.querySelector('.ad-form');
+const typeOfHousing = form.querySelector('#type');
+const priceInputForNight = form.querySelector('#price');
+const timeIn = form.querySelector('#timein');
+const timeOut = form.querySelector('#timeout');
+
+const priceMap = {
+  flat: 1000,
+  house: 5000,
+  bungalow: 0,
+  palace: 10000,
+};
+
+const priceChangeHandler = () => {
+  priceInputForNight.max = '1000000';
+  priceInputForNight.min = priceMap[typeOfHousing.value];
+  priceInputForNight.placeholder = priceMap[typeOfHousing.value];
+};
+
+priceChangeHandler();
+
+const checkinChangeHandler = () => {
+  timeOut.value = timeIn.value;
+};
+
+const checkoutChangeHandler = () => {
+  timeIn.value = timeOut.value;
+};
+
+typeOfHousing.addEventListener('change', priceChangeHandler);
+timeIn.addEventListener('change', checkinChangeHandler);
+timeOut.addEventListener('change', checkoutChangeHandler);
+
+
+// const priceChangeHandler = () => {
+//   typeOfHousing.addEventListener('change', () => {
+//     priceInputForNight.max = '1000000';
+//     switch (typeOfHousing.value) {
+//       case 'bungalow':
+//         priceInputForNight.value = 0;
+//         priceInputForNight.min = 0;
+//         break;
+//       case 'flat':
+//         priceInputForNight.value = 1000;
+//         priceInputForNight.min = 1000;
+//         break;
+//       case 'house':
+//         priceInputForNight.value = 5000;
+//         priceInputForNight.min = 5000;
+//         break;
+//       case 'palace':
+//         priceInputForNight.value = 10000;
+//         priceInputForNight.min = 10000;
+//         break;
+//       default:
+//         priceInputForNight.value = 0;
+//         priceInputForNight.min = 0;
+//     }
+//   });
+// }
+// priceChangeHandler();
+
+// const checkinChangeHandler = () => {
+//   timeIn.addEventListener('change', () => {
+//     switch (timeIn.value) {
+//       case '12:00':
+//         timeOut.value = '12:00';
+//         break;
+//       case '13:00':
+//         timeOut.value = '13:00';
+//         break;
+//       case '14:00':
+//         timeOut.value = '14:00';
+//         break;
+//       default:
+//         timeOut.value = '11:00';
+//     }
+//   });
+// }
+// checkinChangeHandler();
+
+
+// const checkoutChangeHandler = () => {
+//   timeOut.addEventListener('change', () => {
+//     switch (timeOut.value) {
+//       case '12:00':
+//         timeIn.value = '12:00';
+//         break;
+//       case '13:00':
+//         timeIn.value = '13:00';
+//         break;
+//       case '14:00':
+//         timeIn.value = '14:00';
+//         break;
+//       default:
+//         timeIn.value = '11:00';
+//     }
+//   });
+// }
+// checkoutChangeHandler();
+
+export { priceChangeHandler, checkinChangeHandler, checkoutChangeHandler };
+
+
+

@@ -6,7 +6,6 @@ const drawSuggestion = (suggestion) => {
 
   const temp = document.querySelector('#card');
   const content = temp.content.cloneNode(true);
-  console.log(suggestion);
 
   content.querySelector('.popup__title').innerText = suggestion.offer.title;
   content.querySelector('.popup__text--address').innerText = suggestion.offer.address;
@@ -18,6 +17,7 @@ const drawSuggestion = (suggestion) => {
     house: 'Дом',
     palace: 'Дворец',
   }
+
   content.querySelector('.popup__type').innerText = types[suggestion.offer.type];
 
 
@@ -48,7 +48,7 @@ const drawSuggestion = (suggestion) => {
       newPhoto.width = '45';
       newPhoto.height = '40';
       newPhoto.alt = 'Фотография жилья';
-      newPhoto.className = 'popup__photo'
+      newPhoto.className = 'popup__photo';
       photoGallery.appendChild(newPhoto);
     });
   };

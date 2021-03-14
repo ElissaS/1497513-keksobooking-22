@@ -114,7 +114,6 @@ const createSuggestion = () => {
 
 // генерит пустой массив с количеством элементов COUNT_SUGGESTIONS, перезаписывает null  на результат функции createSuggestion()
 const suggestions = new Array(COUNT_SUGGESTIONS).fill(null).map(() => createSuggestion());
-console.log(suggestions);
 
 export { suggestions };
 
