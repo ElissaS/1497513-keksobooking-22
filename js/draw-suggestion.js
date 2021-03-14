@@ -6,7 +6,6 @@ const drawSuggestion = (suggestion) => {
 
   const temp = document.querySelector('#card');
   const content = temp.content.cloneNode(true);
-  console.log(suggestion);
 
   content.querySelector('.popup__title').innerText = suggestion.offer.title;
   content.querySelector('.popup__text--address').innerText = suggestion.offer.address;

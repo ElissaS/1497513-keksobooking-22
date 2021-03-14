@@ -1,32 +1,38 @@
 const form = document.querySelector('.ad-form');
 const typeOfHousing = form.querySelector('#type');
-const priceForNight = form.querySelector('#price');
+const priceInputForNight = form.querySelector('#price');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
 
-const matchHouseVsPrice = () => {
+const priceChangeHandler = () => {
   typeOfHousing.addEventListener('change', () => {
+    priceInputForNight.max = '1000000';
     switch (typeOfHousing.value) {
       case 'bungalow':
-        priceForNight.value = 0;
+        priceInputForNight.value = 0;
+        priceInputForNight.min = 0;
         break;
       case 'flat':
-        priceForNight.value = 1000;
+        priceInputForNight.value = 1000;
+        priceInputForNight.min = 1000;
         break;
       case 'house':
-        priceForNight.value = 5000;
+        priceInputForNight.value = 5000;
+        priceInputForNight.min = 5000;
         break;
       case 'palace':
-        priceForNight.value = 10000;
+        priceInputForNight.value = 10000;
+        priceInputForNight.min = 10000;
         break;
       default:
-        priceForNight.value = 10;
+        priceInputForNight.value = 0;
+        priceInputForNight.min = 0;
     }
   });
 }
-matchHouseVsPrice();
+priceChangeHandler();
 
-const matchTimeinVsTimeout = () => {
+const checkinChangeHandler = () => {
   timeIn.addEventListener('change', () => {
     switch (timeIn.value) {
       case '12:00':
@@ -43,6 +49,6 @@ const matchTimeinVsTimeout = () => {
     }
   });
 }
-matchTimeinVsTimeout();
+checkinChangeHandler();
 
-export { matchHouseVsPrice, matchTimeinVsTimeout };
+export { priceChangeHandler, checkinChangeHandler };
