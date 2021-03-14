@@ -51,4 +51,24 @@ const checkinChangeHandler = () => {
 }
 checkinChangeHandler();
 
-export { priceChangeHandler, checkinChangeHandler };
+
+const checkoutChangeHandler = () => {
+  timeOut.addEventListener('change', () => {
+    switch (timeOut.value) {
+      case '12:00':
+        timeIn.value = '12:00';
+        break;
+      case '13:00':
+        timeIn.value = '13:00';
+        break;
+      case '14:00':
+        timeIn.value = '14:00';
+        break;
+      default:
+        timeIn.value = '11:00';
+    }
+  });
+}
+checkoutChangeHandler();
+
+export { priceChangeHandler, checkinChangeHandler, checkoutChangeHandler };
