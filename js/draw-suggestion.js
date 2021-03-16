@@ -1,11 +1,8 @@
 import { suggestions } from './data.js';
 
 const drawSuggestion = (suggestion) => {
-  // const contentTemplate = document.querySelector('#card').content;
-  // contentTemplate.cloneNode(true);
-
-  const temp = document.querySelector('#card');
-  const content = temp.content.cloneNode(true);
+  const template = document.querySelector('#card');
+  const content = template.content.cloneNode(true);
 
   content.querySelector('.popup__title').innerText = suggestion.offer.title;
   content.querySelector('.popup__text--address').innerText = suggestion.offer.address;
@@ -17,14 +14,9 @@ const drawSuggestion = (suggestion) => {
     house: 'Дом',
     palace: 'Дворец',
   }
-
   content.querySelector('.popup__type').innerText = types[suggestion.offer.type];
-
-
   content.querySelector('.popup__text--capacity').innerText = `${suggestion.offer.rooms} комнаты для ${suggestion.offer.guests} гостей`;
   content.querySelector('.popup__text--time').innerText = `Заезд после ${suggestion.offer.checkin}, выезд до ${suggestion.offer.checkout}`;
-
-
   const featuresPopup = content.querySelector('.popup__features')
 
   const renderFeaturesList = (features, parentBlock) => {
@@ -52,13 +44,9 @@ const drawSuggestion = (suggestion) => {
       photoGallery.appendChild(newPhoto);
     });
   };
-
   renderAdPhotos(suggestion.offer.photos, photosTemp);
-
   content.querySelector('.popup__avatar').src = suggestion.author.avatar;
-  document.querySelector('#map-canvas').appendChild(content);
+  return content;
 }
-
-drawSuggestion(suggestions[0]);
 
 export { drawSuggestion };
