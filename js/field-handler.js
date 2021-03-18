@@ -3,9 +3,6 @@ const typeOfHousing = form.querySelector('#type');
 const priceInputForNight = form.querySelector('#price');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
-const guestList = form.querySelector('#capacity');
-const guestOptions = guestList.querySelectorAll('option');
-const roomList = form.querySelector('#room_number');
 const ROOM_HUNDRED = '100';
 const ROOM_ZERO = '0';
 
@@ -14,20 +11,6 @@ const priceMap = {
   house: 5000,
   bungalow: 0,
   palace: 10000,
-};
-
-const priceChangeHandler = () => {
-  priceInputForNight.max = '1000000';
-  priceInputForNight.min = priceMap[typeOfHousing.value];
-  priceInputForNight.placeholder = priceMap[typeOfHousing.value];
-};
-
-const checkinChangeHandler = () => {
-  timeOut.value = timeIn.value;
-};
-
-const checkoutChangeHandler = () => {
-  timeIn.value = timeOut.value;
 };
 
 const capacityofRooms = {
@@ -49,7 +32,24 @@ const capacityofRooms = {
   },
 }
 
+const priceChangeHandler = () => {
+  priceInputForNight.max = '1000000';
+
+  priceInputForNight.min = priceMap[typeOfHousing.value];
+  priceInputForNight.placeholder = priceMap[typeOfHousing.value];
+};
+
+const checkinChangeHandler = () => {
+  timeOut.value = timeIn.value;
+};
+
+const checkoutChangeHandler = () => {
+  timeIn.value = timeOut.value;
+};
+
 const roomChangeHandler = () => {
+  const guestList = form.querySelector('#capacity');
+  const roomList = form.querySelector('#room_number');
   const currentGuest = guestList.value;
   const currentRoom = roomList.value;
 
@@ -67,6 +67,7 @@ const roomChangeHandler = () => {
 }
 roomChangeHandler();
 
+const guestOptions = guestList.querySelectorAll('option');
 
 const changeOption = () => {
   guestOptions.forEach((option) => {
@@ -89,41 +90,6 @@ const fieldsValidate = () => {
   timeOut.addEventListener('change', checkoutChangeHandler);
 }
 
-// const roomList = form.querySelector('#room_number');
-// const rooms = Array.from(roomList.children);
-// const guestList = form.querySelector('#capacity');
-// const guests = Array.from(guestList.children);
-
-
-// const roomChangeHandler = () => {
-//   guestList.value = roomMap[roomList.value];
-//   guestList.placeholder = roomMap[roomList.value];
-//}
-
-
-// const guestChangeHandler = () => {
-//   roomList.value = guestList.value;
-//   roomList.placeholder = guestList.value;
-// };
-// guestChangeHandler();
-
-// const guestMap = {
-//   1: 1,
-//   2: 2,
-//   3: 3,
-//   0: 100,
-// };
-
-// const guestChangeHandler = () => {
-//   roomList.value = guestMap[guestList.value];
-//   roomList.placeholder = guestMap[guestList.value];
-// };
-
-// guestChangeHandler();
-//guestList.addEventListener('change', guestChangeHandler);
-
+fieldsValidate();
 
 export { fieldsValidate };
-
-
-
