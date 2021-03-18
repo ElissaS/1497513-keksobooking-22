@@ -1,4 +1,5 @@
 const form = document.querySelector('.ad-form');
+const titleInput = form.querySelector('#title');
 const typeOfHousing = form.querySelector('#type');
 const priceInputForNight = form.querySelector('#price');
 const timeIn = form.querySelector('#timein');
@@ -6,6 +7,8 @@ const timeOut = form.querySelector('#timeout');
 const guestList = form.querySelector('#capacity');
 const roomList = form.querySelector('#room_number');
 const guestOptions = guestList.querySelectorAll('option');
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
 
 const priceMap = {
   flat: 1000,
@@ -32,6 +35,21 @@ const capacityOfRooms = {
     error: 'Совсем не для гостей!',
   },
 }
+
+titleInput.addEventListener('input', () => {
+  const valueLength = titleInput.value.length;
+
+  if (valueLength < MIN_NAME_LENGTH) {
+    titleInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    titleInput.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+  } else {
+    titleInput.setCustomValidity('');
+  }
+
+  titleInput.reportValidity();
+});
+
 
 const priceChangeHandler = () => {
   priceInputForNight.max = '1000000';
