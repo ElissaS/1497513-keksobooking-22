@@ -3,8 +3,9 @@ const typeOfHousing = form.querySelector('#type');
 const priceInputForNight = form.querySelector('#price');
 const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
-const ROOM_HUNDRED = '100';
-const ROOM_ZERO = '0';
+const guestList = form.querySelector('#capacity');
+const roomList = form.querySelector('#room_number');
+const guestOptions = guestList.querySelectorAll('option');
 
 const priceMap = {
   flat: 1000,
@@ -13,7 +14,7 @@ const priceMap = {
   palace: 10000,
 };
 
-const capacityofRooms = {
+const capacityOfRooms = {
   1: {
     values: [1],
     error: 'Максимум один гость',
@@ -48,26 +49,20 @@ const checkoutChangeHandler = () => {
 };
 
 const roomChangeHandler = () => {
-  const guestList = form.querySelector('#capacity');
-  const roomList = form.querySelector('#room_number');
-  const currentGuest = guestList.value;
-  const currentRoom = roomList.value;
+  const guestList = document.querySelector('#capacity');
+  const roomList = document.querySelector('#room_number');
+  const currentGuest = Number(guestList.value);
+  const currentRoom = Number(roomList.value);
 
-  if (!capacityofRooms[currentRoom].values.includes(currentGuest)) {
-    guestList.setCustomValidity(capacityofRooms[currentRoom].error);
-  } else {
+  if (capacityOfRooms[currentRoom].values.includes(currentGuest)) {
     guestList.setCustomValidity('');
+  } else {
+    guestList.setCustomValidity(capacityOfRooms[currentRoom].error);
   }
 
-  if (roomList.value === ROOM_HUNDRED && guestList.value > ROOM_ZERO) {
-    guestList.setCustomValidity(capacityofRooms[currentRoom].error);
-  } else {
-    guestList.setCustomValidity('');
-  }
+  guestList.reportValidity();
 }
 roomChangeHandler();
-
-const guestOptions = guestList.querySelectorAll('option');
 
 const changeOption = () => {
   guestOptions.forEach((option) => {

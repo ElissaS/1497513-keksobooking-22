@@ -44,8 +44,7 @@ const mainPinMarker = L.marker(
 );
 
 mainPinMarker
-  .addTo(map)
-  .bindPopup();
+  .addTo(map);
 
 
 const newCoordinates = mainPinMarker.on('drag', (evt) => {
@@ -77,23 +76,6 @@ suggestions.forEach((suggestion) => {
         keepInView: true,
       },
     );
-
-  marker.on('click', function () {
-    if (!this._popup) { // when maker dont have pop up, this will bind popup and and open it
-      // 1 this.bindPopup(template).openPopup();
-
-      // 2 this.openPopup();
-    }
-  });
-
-  // marker
-  //   .addTo(map)
-  //   .bindPopup(
-  //     drawSuggestion(suggestion),
-  //     // {
-  //     //   keepInView: true,
-  //     // },
-  //   );
 });
 
 export { newCoordinates };
