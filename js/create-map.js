@@ -52,6 +52,8 @@ const newCoordinates = mainPinMarker.on('drag', (evt) => {
   inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
+
+
 suggestions.forEach((suggestion) => {
   const { x, y } = suggestion.location;
 
@@ -65,14 +67,33 @@ suggestions.forEach((suggestion) => {
     lng: y,
   });
 
+  const template = drawSuggestion(suggestion);
+
   marker
     .addTo(map)
     .bindPopup(
-      drawSuggestion(suggestion),
+      template,
       {
         keepInView: true,
       },
     );
+
+  marker.on('click', function () {
+    if (!this._popup) { // when maker dont have pop up, this will bind popup and and open it
+      // 1 this.bindPopup(template).openPopup();
+
+      // 2 this.openPopup();
+    }
+  });
+
+  // marker
+  //   .addTo(map)
+  //   .bindPopup(
+  //     drawSuggestion(suggestion),
+  //     // {
+  //     //   keepInView: true,
+  //     // },
+  //   );
 });
 
 export { newCoordinates };
