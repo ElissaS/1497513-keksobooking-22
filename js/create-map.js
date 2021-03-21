@@ -44,13 +44,14 @@ const mainPinMarker = L.marker(
 );
 
 mainPinMarker
-  .addTo(map)
-  .bindPopup();
+  .addTo(map);
 
 
 const newCoordinates = mainPinMarker.on('drag', (evt) => {
   inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
+
+
 
 suggestions.forEach((suggestion) => {
   const { x, y } = suggestion.location;
@@ -65,10 +66,12 @@ suggestions.forEach((suggestion) => {
     lng: y,
   });
 
+  const template = drawSuggestion(suggestion);
+
   marker
     .addTo(map)
     .bindPopup(
-      drawSuggestion(suggestion),
+      template,
       {
         keepInView: true,
       },

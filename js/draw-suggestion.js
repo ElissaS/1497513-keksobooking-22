@@ -1,5 +1,3 @@
-import { suggestions } from './data.js';
-
 const drawSuggestion = (suggestion) => {
   const template = document.querySelector('#card');
   const content = template.content.cloneNode(true);
@@ -46,7 +44,7 @@ const drawSuggestion = (suggestion) => {
   };
   renderAdPhotos(suggestion.offer.photos, photosTemp);
   content.querySelector('.popup__avatar').src = suggestion.author.avatar;
-  return content;
+  return content.firstElementChild;
 }
 
 export { drawSuggestion };
