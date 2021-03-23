@@ -1,3 +1,9 @@
+import { sendServerData } from './get-server-data.js';
+import { showSendErrorNotice } from './error.js';
+import { showSendSuccessNotice } from './success.js';
+import { resetMap, newCoordinates } from './create-map.js';
+
+
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
 const typeOfHousing = form.querySelector('#type');
@@ -7,6 +13,7 @@ const timeOut = form.querySelector('#timeout');
 const guestList = form.querySelector('#capacity');
 const roomList = form.querySelector('#room_number');
 const guestOptions = guestList.querySelectorAll('option');
+const resetButton = form.querySelector('.ad-form__reset');
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 
@@ -40,9 +47,9 @@ titleInput.addEventListener('input', () => {
   const valueLength = titleInput.value.length;
 
   if (valueLength < MIN_NAME_LENGTH) {
-    titleInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв.');
+    titleInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
   } else if (valueLength > MAX_NAME_LENGTH) {
-    titleInput.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв.');
+    titleInput.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) + ' симв.');
   } else {
     titleInput.setCustomValidity('');
   }
@@ -53,7 +60,6 @@ titleInput.addEventListener('input', () => {
 
 const priceChangeHandler = () => {
   priceInputForNight.max = '1000000';
-
   priceInputForNight.min = priceMap[typeOfHousing.value];
   priceInputForNight.placeholder = priceMap[typeOfHousing.value];
 };
@@ -90,6 +96,35 @@ const changeOption = () => {
   })
 }
 changeOption();
+
+const resetForm = () => {
+  form.reset();
+  priceChangeHandler();
+  newCoordinates();
+  // resetPreview(avatarPreview, DEFAULT_IMAGE_SRC);
+  // resetPreview(imagesPreview, DEFAULT_IMAGE_SRC);
+}
+
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+  resetMap();
+})
+
+
+const successHandler = () => {
+  showSendSuccessNotice();
+  resetForm();
+  resetMap();
+}
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+  sendServerData(successHandler, showSendErrorNotice, formData)
+});
+
 
 const fieldsValidate = () => {
   priceChangeHandler();
