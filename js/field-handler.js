@@ -2,7 +2,8 @@ import { sendServerData } from './get-server-data.js';
 import { showSendErrorNotice } from './error.js';
 import { showSendSuccessNotice } from './success.js';
 import { resetMap, newCoordinates } from './create-map.js';
-
+import { uploadPicture } from './upload-pic.js';
+// import { uploadPicture, resetPreview } from './upload-pic.js';
 
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
@@ -14,6 +15,11 @@ const guestList = form.querySelector('#capacity');
 const roomList = form.querySelector('#room_number');
 const guestOptions = guestList.querySelectorAll('option');
 const resetButton = form.querySelector('.ad-form__reset');
+const avatarPic  = document.querySelector('#avatar');
+const avatarPreview = document.querySelector('.ad-form-header__preview-img')
+const images = document.querySelector('#images');
+const imagesPreview = document.querySelector('.ad-form__photo-preview');
+const DEFAULT_IMG_SRC = 'img/muffin-grey.svg';
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 
@@ -101,8 +107,8 @@ const resetForm = () => {
   form.reset();
   priceChangeHandler();
   newCoordinates();
-  // resetPreview(avatarPreview, DEFAULT_IMAGE_SRC);
-  // resetPreview(imagesPreview, DEFAULT_IMAGE_SRC);
+  // resetPreview(avatarPreview, DEFAULT_IMG_SRC);
+  // resetPreview(imagesPreview, DEFAULT_IMG_SRC);
 }
 
 resetButton.addEventListener('click', (evt) => {
@@ -138,6 +144,7 @@ const fieldsValidate = () => {
   timeOut.addEventListener('change', checkoutChangeHandler);
 }
 
-fieldsValidate();
+uploadPicture(avatarPic, avatarPreview);
+uploadPicture(images, imagesPreview);
 
 export { fieldsValidate };

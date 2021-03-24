@@ -1,20 +1,14 @@
-import { suggestions } from './data.js';
-import { drawSuggestion } from './draw-suggestion.js';
-import { fieldsValidate } from './field-handler.js';
-import { inputAddress, deactivationOfPage, activationOfPage } from './status-of-page.js';
-import { newCoordinates, createMarkers } from './create-map.js';
-import { getServerData, sendServerData } from './get-server-data.js';
+import './draw-suggestion.js';
 import './success.js';
+import { fieldsValidate } from './field-handler.js';
+import { deactivationOfPage } from './status-of-page.js';
+import { createMarkers } from './create-map.js';
+import { getServerData } from './get-server-data.js';
 import { showGetErrorNotice } from './error.js';
-
-
-const onDataFail = () => {
-  showGetErrorNotice();
- // disableForms();
-}
-
+import { setFilterListener } from './set-filters.js';
+const MAX_MARKERS_NUMBER = 10;
 /**
- * @typedef Suggestion
+ * @typedef item
  * @type Object
  * @property {Object} author
  * @property {String} author.avatar
@@ -39,21 +33,17 @@ const onDataFail = () => {
  * Обработчик успешного получения ответа от сервера
  * Создаёт маркеры
  * Ставит слушатели на фильтры формы
- * @param {Suggestion[]} data - массив предложений
+ * @param {item[]} data - массив предложений
  */
 const onDataSuccess = (data) => {
-  createMarkers(data);
-  //setFilterListener(data);
+  createMarkers(data.slice(0, MAX_MARKERS_NUMBER));
+  setFilterListener(data);
+}
+
+const onDataFail = () => {
+  showGetErrorNotice();
+  deactivationOfPage();
 }
 
 fieldsValidate();
-
 getServerData(onDataSuccess, onDataFail);
-
-//TODO: настроить фильтры
-//const setFilterListener = () => {
-// console.log('not implemented yet');
-//}
-// const disableForms = () => {
-//   console.log('not implemented yet');
-// }

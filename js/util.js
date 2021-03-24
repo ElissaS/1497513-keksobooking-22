@@ -45,4 +45,30 @@ const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
 };
 
-export { getRandomInteger, getRandomFloatInRange, getRandomArray, getRandomArrayElement, isEscEvent };
+const debounce = (func, wait, immediate) => {
+  let timeout;
+
+  return function executedFunction() {
+    const context = this;
+    const args = arguments;
+
+    const setLaterFunc = function() {
+      timeout = null;
+      if (!immediate) {
+        func.apply(context, args)
+      }
+    };
+
+    const callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(setLaterFunc, wait);
+
+    if (callNow) {
+      func.apply(context, args)
+    }
+  };
+}
+
+export { getRandomInteger, getRandomFloatInRange, getRandomArray, getRandomArrayElement, isEscEvent, debounce };
