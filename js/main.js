@@ -1,5 +1,6 @@
 import './draw-suggestion.js';
 import './success.js';
+import './upload-pic.js';
 import { fieldsValidate } from './field-handler.js';
 import { deactivationOfPage } from './status-of-page.js';
 import { createMarkers } from './create-map.js';
@@ -7,6 +8,7 @@ import { getServerData } from './get-server-data.js';
 import { showGetErrorNotice } from './error.js';
 import { setFilterListener } from './set-filters.js';
 const MAX_MARKERS_NUMBER = 10;
+
 /**
  * @typedef item
  * @type Object
