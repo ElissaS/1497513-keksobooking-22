@@ -31,7 +31,7 @@ const uploadPic = (input, preview) => {
       const reader = new FileReader();
 
       reader.addEventListener('load', () => {
-        preview.src = reader.result;
+        preview().src = reader.result;
       });
 
       reader.readAsDataURL(file);
