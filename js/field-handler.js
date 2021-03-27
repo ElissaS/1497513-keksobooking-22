@@ -2,7 +2,7 @@ import { sendServerData } from './get-server-data.js';
 import { showSendErrorNotice } from './error.js';
 import { showSendSuccessNotice } from './success.js';
 import { resetMap, newCoordinates } from './create-map.js';
-
+import { resetPreview } from './upload-pic.js';
 
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
@@ -101,8 +101,7 @@ const resetForm = () => {
   form.reset();
   priceChangeHandler();
   newCoordinates();
-  // resetPreview(avatarPreview, DEFAULT_IMAGE_SRC);
-  // resetPreview(imagesPreview, DEFAULT_IMAGE_SRC);
+  resetPreview();
 }
 
 resetButton.addEventListener('click', (evt) => {
@@ -137,7 +136,5 @@ const fieldsValidate = () => {
   timeIn.addEventListener('change', checkinChangeHandler);
   timeOut.addEventListener('change', checkoutChangeHandler);
 }
-
-fieldsValidate();
 
 export { fieldsValidate };

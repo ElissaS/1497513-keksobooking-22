@@ -1,3 +1,6 @@
+const IMG_HEIGHT = 70;
+const IMG_WIDTH = 70;
+
 // Функция, возвращающая случайное целое число из переданного диапазона включительно.
 const getRandomInteger = (min, max) => {
   if (min < 0 || max < min || max === min) {
@@ -45,4 +48,49 @@ const isEscEvent = (evt) => {
   return evt.key === ('Escape' || 'Esc');
 };
 
-export { getRandomInteger, getRandomFloatInRange, getRandomArray, getRandomArrayElement, isEscEvent };
+const debounce = (func, wait, immediate) => {
+  let timeout;
+
+  return function executedFunction() {
+    const context = this;
+    const args = arguments;
+
+    const setLaterFunc = function () {
+      timeout = null;
+      if (!immediate) {
+        func.apply(context, args)
+      }
+    };
+
+    const callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(setLaterFunc, wait);
+
+    if (callNow) {
+      func.apply(context, args)
+    }
+  };
+}
+
+const createImg = (className, alt, imgWidth = IMG_WIDTH, imgHeight = IMG_HEIGHT) => {
+  const newImage = document.createElement('img');
+  newImage.classList.add(className);
+  newImage.alt = alt;
+  newImage.width = imgWidth;
+  newImage.height = imgHeight;
+
+  return newImage;
+}
+
+
+export {
+  getRandomInteger,
+  getRandomFloatInRange,
+  getRandomArray,
+  getRandomArrayElement,
+  isEscEvent,
+  debounce,
+  createImg
+};

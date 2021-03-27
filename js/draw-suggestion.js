@@ -1,10 +1,10 @@
-const drawSuggestion = (suggestion) => {
+const drawSuggestion = (item) => {
   const template = document.querySelector('#card');
   const content = template.content.cloneNode(true);
 
-  content.querySelector('.popup__title').innerText = suggestion.offer.title;
-  content.querySelector('.popup__text--address').innerText = suggestion.offer.address;
-  content.querySelector('.popup__text--price').innerText = suggestion.offer.price;
+  content.querySelector('.popup__title').innerText = item.offer.title;
+  content.querySelector('.popup__text--address').innerText = item.offer.address;
+  content.querySelector('.popup__text--price').innerText = item.offer.price;
 
   const types = {
     flat: 'Квартира',
@@ -12,9 +12,9 @@ const drawSuggestion = (suggestion) => {
     house: 'Дом',
     palace: 'Дворец',
   }
-  content.querySelector('.popup__type').innerText = types[suggestion.offer.type];
-  content.querySelector('.popup__text--capacity').innerText = `${suggestion.offer.rooms} комнаты для ${suggestion.offer.guests} гостей`;
-  content.querySelector('.popup__text--time').innerText = `Заезд после ${suggestion.offer.checkin}, выезд до ${suggestion.offer.checkout}`;
+  content.querySelector('.popup__type').innerText = types[item.offer.type];
+  content.querySelector('.popup__text--capacity').innerText = `${item.offer.rooms} комнаты для ${item.offer.guests} гостей`;
+  content.querySelector('.popup__text--time').innerText = `Заезд после ${item.offer.checkin}, выезд до ${item.offer.checkout}`;
   const featuresPopup = content.querySelector('.popup__features')
 
   const renderFeaturesList = (features, parentBlock) => {
@@ -25,9 +25,9 @@ const drawSuggestion = (suggestion) => {
       parentBlock.appendChild(newFeature);
     });
   };
-  renderFeaturesList(suggestion.offer.features, featuresPopup);
+  renderFeaturesList(item.offer.features, featuresPopup);
 
-  content.querySelector('.popup__description').innerText = suggestion.offer.description;
+  content.querySelector('.popup__description').innerText = item.offer.description;
 
   const photosTemp = content.querySelector('.popup__photos');
   const renderAdPhotos = (photos, photoGallery) => {
@@ -42,8 +42,8 @@ const drawSuggestion = (suggestion) => {
       photoGallery.appendChild(newPhoto);
     });
   };
-  renderAdPhotos(suggestion.offer.photos, photosTemp);
-  content.querySelector('.popup__avatar').src = suggestion.author.avatar;
+  renderAdPhotos(item.offer.photos, photosTemp);
+  content.querySelector('.popup__avatar').src = item.author.avatar;
   return content.firstElementChild;
 }
 

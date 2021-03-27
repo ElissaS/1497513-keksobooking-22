@@ -1,6 +1,5 @@
 /* global L:readonly */
-import { inputAddress, activationOfPage, deactivationOfPage } from './status-of-page.js';
-import { suggestions } from './data.js';
+import { inputAddress, activationOfPage } from './status-of-page.js';
 import { drawSuggestion } from './draw-suggestion.js';
 
 
@@ -13,7 +12,6 @@ const getAddress = () => {
   inputAddress.value = `${defaultCoordinates.lat.toFixed(5)}, ${defaultCoordinates.lng.toFixed(5)}`;
 }
 
-document.addEventListener('load', deactivationOfPage());
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -46,16 +44,15 @@ const mainPinMarker = L.marker(
 mainPinMarker
   .addTo(map);
 
-
 const newCoordinates = () => {
   mainPinMarker.on('drag', (evt) => {
     inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
   });
 }
 
-const createMarkers = (suggestions) => {
-  suggestions.forEach((suggestion) => {
-    const { lat, lng } = suggestion.location;
+const createMarkers = (array) => {
+  array.forEach((item) => {
+    const { lat, lng } = item.location;
 
     L.icon({
       iconUrl: '/img/pin.svg',
@@ -65,7 +62,7 @@ const createMarkers = (suggestions) => {
 
     const marker = L.marker({ lat, lng });
 
-    const template = drawSuggestion(suggestion);
+    const template = drawSuggestion(item);
 
     marker
       .addTo(map)
@@ -78,10 +75,17 @@ const createMarkers = (suggestions) => {
   });
 }
 
+const markers = L.layerGroup();
+
+const cleanMarkers = () => {
+  map.closePopup();
+  markers.clearLayers();
+}
+
 const resetMap = () => {
   map.panTo([defaultCoordinates.lat, defaultCoordinates.lng]);
   mainPinMarker.setLatLng([defaultCoordinates.lat, defaultCoordinates.lng]);
   getAddress();
 }
 
-export { newCoordinates, createMarkers, resetMap };
+export { newCoordinates, createMarkers, resetMap, cleanMarkers };
