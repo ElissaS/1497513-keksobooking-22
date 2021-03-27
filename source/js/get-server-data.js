@@ -1,11 +1,5 @@
 const END_POINT = 'https://22.javascript.pages.academy/keksobooking';
 
-
-/**
- * Получение ответа от сервера
- * @param {Function} onSuccess
- * @param {Function} onError
- */
 const getServerData = (onSuccess, onError) => {
   fetch(`${END_POINT}/data`)
     .then((response) => response.json())

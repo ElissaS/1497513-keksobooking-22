@@ -37,47 +37,17 @@ const uploadPic = (input, preview) => {
       reader.readAsDataURL(file);
       return true;
     }
-    //console.warn('пользователь попытался загрузить невалидный файл')
+
     return false;
   })
 }
-
-
-//!!!!!!рабочий вариант по названию формата кратинки!!!!!!
-// const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-// const uploadPic = (input, preview) => {
-//   input.addEventListener('change', () => {
-//     const file = input.files[0];
-//     const fileName = file.name.toLowerCase();
-
-//     const matches = FILE_TYPES.some((it) => {
-//       return fileName.endsWith(it);
-//     });
-
-//     if (matches) {
-//       const reader = new FileReader();
-
-//       reader.addEventListener('load', () => {
-//         preview.src = reader.result;
-//       });
-
-//       reader.readAsDataURL(file);
-//     }
-//   });
-// }
-
 
 const resetPreview = () => {
   addAvatar().src = DEFAULT_IMG_SRC;
   imagesPreview.innerHTML = '';
 };
 
-
 uploadPic(avatarChooser, addAvatar);
 uploadPic(imagesChooser, addSuggestionPic);
 
 export { resetPreview };
-
-//   // TODO: если пользователь попытался загрузить невалидный файл,
-//   // показать сообщение об ошибке
-//   // очистить поле загрузки файла
