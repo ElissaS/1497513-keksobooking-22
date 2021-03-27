@@ -47,35 +47,41 @@ mainPinMarker
   .addTo(map);
 
 
-const newCoordinates = mainPinMarker.on('drag', (evt) => {
-  inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
-});
-
-
-
-suggestions.forEach((suggestion) => {
-  const { x, y } = suggestion.location;
-
-  const icon = L.icon({
-    iconUrl: '/img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+const newCoordinates = () => {
+  mainPinMarker.on('drag', (evt) => {
+    inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
   });
-  const marker = L.marker({
-    lat: x,
-    lng: y,
+}
+
+const createMarkers = (suggestions) => {
+  suggestions.forEach((suggestion) => {
+    const { lat, lng } = suggestion.location;
+
+    L.icon({
+      iconUrl: '/img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+
+    const marker = L.marker({ lat, lng });
+
+    const template = drawSuggestion(suggestion);
+
+    marker
+      .addTo(map)
+      .bindPopup(
+        template,
+        {
+          keepInView: true,
+        },
+      );
   });
+}
 
-  const template = drawSuggestion(suggestion);
+const resetMap = () => {
+  map.panTo([defaultCoordinates.lat, defaultCoordinates.lng]);
+  mainPinMarker.setLatLng([defaultCoordinates.lat, defaultCoordinates.lng]);
+  getAddress();
+}
 
-  marker
-    .addTo(map)
-    .bindPopup(
-      template,
-      {
-        keepInView: true,
-      },
-    );
-});
-
-export { newCoordinates };
+export { newCoordinates, createMarkers, resetMap };
