@@ -46,7 +46,6 @@ mainPinMarker.on('drag', (evt) => {
   inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
-
 let markers = [];
 
 const createMarkers = (array) => {
