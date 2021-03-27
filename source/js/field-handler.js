@@ -1,8 +1,9 @@
 import { sendServerData } from './get-server-data.js';
 import { showSendErrorNotice } from './error.js';
 import { showSendSuccessNotice } from './success.js';
-import { resetMap, newCoordinates } from './create-map.js';
+import { resetMap } from './create-map.js';
 import { resetPreview } from './upload-pic.js';
+import { filtersForm } from './set-filters.js';
 
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
@@ -57,7 +58,6 @@ titleInput.addEventListener('input', () => {
   titleInput.reportValidity();
 });
 
-
 const priceChangeHandler = () => {
   priceInputForNight.max = '1000000';
   priceInputForNight.min = priceMap[typeOfHousing.value];
@@ -86,6 +86,7 @@ const roomChangeHandler = () => {
 
   guestList.reportValidity();
 }
+
 roomChangeHandler();
 
 const changeOption = () => {
@@ -95,12 +96,14 @@ const changeOption = () => {
     }
   })
 }
+
 changeOption();
 
 const resetForm = () => {
   form.reset();
+  filtersForm.reset();
+  filtersForm.dispatchEvent(new Event('change'));
   priceChangeHandler();
-  newCoordinates();
   resetPreview();
 }
 
@@ -109,7 +112,6 @@ resetButton.addEventListener('click', (evt) => {
   resetForm();
   resetMap();
 })
-
 
 const successHandler = () => {
   showSendSuccessNotice();
@@ -123,7 +125,6 @@ form.addEventListener('submit', (evt) => {
   const formData = new FormData(evt.target);
   sendServerData(successHandler, showSendErrorNotice, formData)
 });
-
 
 const fieldsValidate = () => {
   priceChangeHandler();

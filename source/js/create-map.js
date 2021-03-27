@@ -2,21 +2,19 @@
 import { inputAddress, activationOfPage } from './status-of-page.js';
 import { drawSuggestion } from './draw-suggestion.js';
 
-
 const defaultCoordinates = {
   lat: 35.6803997,
   lng: 139.7690174,
 };
 
-const getAddress = () => {
+const setDefaultCoordinatesToInputAddress = () => {
   inputAddress.value = `${defaultCoordinates.lat.toFixed(5)}, ${defaultCoordinates.lng.toFixed(5)}`;
 }
-
 
 const map = L.map('map-canvas')
   .on('load', () => {
     activationOfPage();
-    getAddress();
+    setDefaultCoordinatesToInputAddress();
   })
   .setView(defaultCoordinates, 10);
 
@@ -44,13 +42,14 @@ const mainPinMarker = L.marker(
 mainPinMarker
   .addTo(map);
 
-const newCoordinates = () => {
-  mainPinMarker.on('drag', (evt) => {
-    inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
-  });
-}
+mainPinMarker.on('drag', (evt) => {
+  inputAddress.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+});
+
+let markers = [];
 
 const createMarkers = (array) => {
+  markers = [];
   array.forEach((item) => {
     const { lat, lng } = item.location;
 
@@ -72,20 +71,21 @@ const createMarkers = (array) => {
           keepInView: true,
         },
       );
+    markers.push(marker);
   });
-}
-
-const markers = L.layerGroup();
-
-const cleanMarkers = () => {
-  map.closePopup();
-  markers.clearLayers();
 }
 
 const resetMap = () => {
   map.panTo([defaultCoordinates.lat, defaultCoordinates.lng]);
   mainPinMarker.setLatLng([defaultCoordinates.lat, defaultCoordinates.lng]);
-  getAddress();
+  setDefaultCoordinatesToInputAddress();
 }
 
-export { newCoordinates, createMarkers, resetMap, cleanMarkers };
+const cleanMarkers = () => {
+  map.closePopup();
+  markers.forEach((marker) => {
+    map.removeLayer(marker);
+  })
+}
+
+export { createMarkers, resetMap, cleanMarkers };

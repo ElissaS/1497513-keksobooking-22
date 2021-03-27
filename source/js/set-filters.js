@@ -1,4 +1,4 @@
-import { cleanMarkers, createMarkers } from './create-map.js';
+import { createMarkers, cleanMarkers } from './create-map.js';
 import { debounce } from './util.js';
 
 const filtersForm = document.querySelector('.map__filters');
@@ -39,7 +39,7 @@ const filterByPrice = (item) => {
 
 const filterByRooms = (item) => {
   return item.offer.rooms === parseInt(filterRooms.value, 10) || filterRooms.value === ANY_VALUE;
- };
+};
 
 const filterByGuests = (item) => {
   return item.offer.guests === parseInt(filterGuests.value, 10) || filterGuests.value === ANY_VALUE;
@@ -59,7 +59,16 @@ const filterMarkers = (data) => {
   const filteredCards = [];
 
   for (let i = 0; i < data.length; i++) {
-    if (filterByType(data[i]) && filterByRooms(data[i]) && filterByGuests(data[i]) && filterByPrice(data[i]) && filterByFeatures(data[i]) && filteredCards.length <= COUNT_OF_CARDS) {
+    if (filteredCards.length === COUNT_OF_CARDS) {
+      break;
+    }
+    if (
+      filterByType(data[i])
+      && filterByRooms(data[i])
+      && filterByGuests(data[i])
+      && filterByPrice(data[i])
+      && filterByFeatures(data[i])
+    ) {
       filteredCards.push(data[i]);
     }
   }
@@ -71,14 +80,13 @@ const updateMarkers = debounce((data) => {
   const filteredData = filterMarkers(data);
   cleanMarkers();
   createMarkers(filteredData);
-}, DISPLAY_DELAY, IMMEDIATE_DISPLAY)
+}, DISPLAY_DELAY, IMMEDIATE_DISPLAY);
 
 const setFilterListener = (data) => {
   filtersForm.addEventListener('change', () => {
     updateMarkers(data);
-  })
+  });
+
 }
 
-export { setFilterListener };
-
-//TODO: при выборе конкретного фильтра на карте остаются маркеры неподходящих вариантов. По тех заданию вроде должны исчезать
+export { setFilterListener, updateMarkers, COUNT_OF_CARDS, filtersForm };
