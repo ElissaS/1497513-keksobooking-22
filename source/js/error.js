@@ -7,20 +7,20 @@ const showSendErrorNotice = () => {
   errorNotice.style.zIndex = 1000;
   document.body.appendChild(errorNotice);
 
-  const onEscNoticeClose = (evt) => {
+  const closeNoticeonEsc = (evt) => {
     evt.preventDefault();
     if (isEscEvent(evt)) {
       errorNotice.remove();
-      document.removeEventListener('keydown', onEscNoticeClose);
+      document.removeEventListener('keydown', closeNoticeonEsc);
     }
   }
 
   errorNotice.addEventListener('click', () => {
     errorNotice.remove();
-    document.removeEventListener('keydown', onEscNoticeClose);
+    document.removeEventListener('keydown', closeNoticeonEsc);
   })
 
-  document.addEventListener('keydown', onEscNoticeClose)
+  document.addEventListener('keydown', closeNoticeonEsc)
 }
 
 const alertBox = document.createElement('div');

@@ -12,7 +12,7 @@ const toggleElement = (arr, state) => {
   })
 }
 
-const deactivationOfPage = () => {
+const deactivatePage = () => {
   form.classList.add('ad-form--disabled');
   formMap.classList.add('map__filters--disabled');
   fieldset.disabled = true;
@@ -21,7 +21,7 @@ const deactivationOfPage = () => {
   toggleElement(mapFilters, true);
 }
 
-const activationOfPage = () => {
+const activatePage = () => {
   form.classList.remove('ad-form--disabled');
   formMap.classList.remove('map__filters--disabled');
   inputAddress.readOnly = true;
@@ -30,4 +30,4 @@ const activationOfPage = () => {
   toggleElement(mapFilters, false);
 }
 
-export { inputAddress, deactivationOfPage, activationOfPage };
+export { inputAddress, deactivatePage, activatePage };

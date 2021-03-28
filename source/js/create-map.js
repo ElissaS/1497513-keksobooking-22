@@ -1,7 +1,9 @@
 /* global L:readonly */
-import { inputAddress, activationOfPage } from './status-of-page.js';
+import { inputAddress, activatePage } from './status-of-page.js';
 import { drawSuggestion } from './draw-suggestion.js';
-
+const PIN_BIGGER_SIZE = 52;
+const PIN_SMALLER_SIZE = 26;
+const MAP_ZOOM = 10;
 const defaultCoordinates = {
   lat: 35.6803997,
   lng: 139.7690174,
@@ -13,10 +15,10 @@ const setDefaultCoordinatesToInputAddress = () => {
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    activationOfPage();
+    activatePage();
     setDefaultCoordinatesToInputAddress();
   })
-  .setView(defaultCoordinates, 10);
+  .setView(defaultCoordinates, MAP_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -27,8 +29,8 @@ L.tileLayer(
 
 const mainPinIcon = L.icon({
   iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconsSize: [PIN_BIGGER_SIZE, PIN_BIGGER_SIZE],
+  iconsAnchor: [PIN_SMALLER_SIZE, PIN_BIGGER_SIZE],
 });
 
 const mainPinMarker = L.marker(
@@ -55,8 +57,8 @@ const createMarkers = (array) => {
 
     L.icon({
       iconUrl: '../img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
+      iconsSize: [PIN_BIGGER_SIZE, PIN_BIGGER_SIZE],
+      iconsAnchor: [PIN_SMALLER_SIZE, PIN_BIGGER_SIZE],
     });
 
     const marker = L.marker({ lat, lng });

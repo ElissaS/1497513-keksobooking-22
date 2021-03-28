@@ -5,6 +5,8 @@ import { resetMap } from './create-map.js';
 import { resetPreview } from './upload-pic.js';
 import { filtersForm } from './set-filters.js';
 
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
 const form = document.querySelector('.ad-form');
 const titleInput = form.querySelector('#title');
 const typeOfHousing = form.querySelector('#type');
@@ -15,8 +17,6 @@ const guestList = form.querySelector('#capacity');
 const roomList = form.querySelector('#room_number');
 const guestOptions = guestList.querySelectorAll('option');
 const resetButton = form.querySelector('.ad-form__reset');
-const MIN_NAME_LENGTH = 30;
-const MAX_NAME_LENGTH = 100;
 
 const priceMap = {
   flat: 1000,
@@ -58,23 +58,21 @@ titleInput.addEventListener('input', () => {
   titleInput.reportValidity();
 });
 
-const priceChangeHandler = () => {
+const onPriceChange = () => {
   priceInputForNight.max = '1000000';
   priceInputForNight.min = priceMap[typeOfHousing.value];
   priceInputForNight.placeholder = priceMap[typeOfHousing.value];
 };
 
-const checkinChangeHandler = () => {
+const onCheckinChange = () => {
   timeOut.value = timeIn.value;
 };
 
-const checkoutChangeHandler = () => {
+const onCheckoutChange = () => {
   timeIn.value = timeOut.value;
 };
 
-const roomChangeHandler = () => {
-  const guestList = document.querySelector('#capacity');
-  const roomList = document.querySelector('#room_number');
+const onRoomChange  = () => {
   const currentGuest = Number(guestList.value);
   const currentRoom = Number(roomList.value);
 
@@ -87,7 +85,7 @@ const roomChangeHandler = () => {
   guestList.reportValidity();
 }
 
-roomChangeHandler();
+onRoomChange ();
 
 const changeOption = () => {
   guestOptions.forEach((option) => {
@@ -103,7 +101,7 @@ const resetForm = () => {
   form.reset();
   filtersForm.reset();
   filtersForm.dispatchEvent(new Event('change'));
-  priceChangeHandler();
+  onPriceChange();
   resetPreview();
 }
 
@@ -113,7 +111,7 @@ resetButton.addEventListener('click', (evt) => {
   resetMap();
 })
 
-const successHandler = () => {
+const onSuccessChange = () => {
   showSendSuccessNotice();
   resetForm();
   resetMap();
@@ -123,19 +121,19 @@ form.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const formData = new FormData(evt.target);
-  sendServerData(successHandler, showSendErrorNotice, formData)
+  sendServerData(onSuccessChange, showSendErrorNotice, formData)
 });
 
 const fieldsValidate = () => {
-  priceChangeHandler();
-  checkinChangeHandler();
-  checkoutChangeHandler();
+  onPriceChange();
+  onCheckinChange();
+  onCheckoutChange();
   changeOption();
-  guestList.addEventListener('change', roomChangeHandler);
-  roomList.addEventListener('change', roomChangeHandler);
-  typeOfHousing.addEventListener('change', priceChangeHandler);
-  timeIn.addEventListener('change', checkinChangeHandler);
-  timeOut.addEventListener('change', checkoutChangeHandler);
+  guestList.addEventListener('change', onRoomChange );
+  roomList.addEventListener('change', onRoomChange );
+  typeOfHousing.addEventListener('change', onPriceChange);
+  timeIn.addEventListener('change', onCheckinChange);
+  timeOut.addEventListener('change', onCheckoutChange);
 }
 
 export { fieldsValidate };

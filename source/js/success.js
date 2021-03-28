@@ -8,19 +8,19 @@ const showSendSuccessNotice = () => {
   successNotice.style.zIndex = 1000;
   document.body.appendChild(successNotice);
 
-  const onEscNoticeClose = (evt) => {
+  const closeNoticeonEsc = (evt) => {
     evt.preventDefault()
     if (isEscEvent(evt)) {
       successNotice.remove()
-      document.removeEventListener('keydown', onEscNoticeClose);
+      document.removeEventListener('keydown', closeNoticeonEsc);
     }
   }
   successNotice.addEventListener('click', () => {
     successNotice.remove();
-    document.removeEventListener('keydown', onEscNoticeClose);
+    document.removeEventListener('keydown', closeNoticeonEsc);
   })
 
-  document.addEventListener('keydown', onEscNoticeClose);
+  document.addEventListener('keydown', closeNoticeonEsc);
 }
 
 export { showSendSuccessNotice };

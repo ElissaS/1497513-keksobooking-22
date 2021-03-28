@@ -1,11 +1,11 @@
-const ALLOWED_FILE_TYPES = ['image/gif', 'image/jpg', 'image/jpeg', 'image/png', 'image/svg'];
 import { createImg } from './util.js';
+const ALLOWED_TYPE_OF_FILES = ['image/gif', 'image/jpg', 'image/jpeg', 'image/png', 'image/svg'];
+const DEFAULT_IMG_SRC = 'img/muffin-grey.svg';
 
 const avatarChooser = document.querySelector('.ad-form-header__input');
 const imagesChooser = document.querySelector('.ad-form__input');
 const imagesPreview = document.querySelector('.ad-form__photo');
 const avatarPreview = document.querySelector('.ad-form-header__preview');
-const DEFAULT_IMG_SRC = 'img/muffin-grey.svg';
 
 const addAvatar = () => {
   avatarPreview.innerHTML = '';
@@ -25,7 +25,7 @@ const uploadPic = (input, preview) => {
   input.addEventListener('change', () => {
     const file = input.files[0];
     const fileType = file.type;
-    const isValidFileType = ALLOWED_FILE_TYPES.includes(fileType);
+    const isValidFileType = ALLOWED_TYPE_OF_FILES.includes(fileType);
 
     if (isValidFileType) {
       const reader = new FileReader();
